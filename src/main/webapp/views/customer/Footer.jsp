@@ -501,10 +501,13 @@
                             txt : txtSearch
                         },
                         success: function(data){
+                        	console.log("data: "+data);
                         	console.log("zo");
-                        	if(data == ""){
-                        		var showEmptyResultSearchByAjax = document.getElementById("resultSearch");
+                        	console.log(data.length)
+                        	if(data.length == 0){
                         		console.log("zo1");
+                        		var showEmptyResultSearchByAjax = document.getElementById("resultSearch");
+                        		showEmptyResultSearchByAjax.innerHTML = "";
                         		showEmptyResultSearchByAjax.innerHTML = `<div><img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/a60759ad1dabe909c46a817ecbf71878.png"><div>Không tìm thấy kết quả nào</div><div>Hãy thử sử dụng các từ khóa chung chung hơn</div></div>`;
                         	} else{
                         		console.log("zo2");
@@ -513,7 +516,7 @@
                         	}                    
                         },
                         error: function (xhr){
-                            // Do something to handle error
+                        	console.log("error")
                         }
                     });
                 }

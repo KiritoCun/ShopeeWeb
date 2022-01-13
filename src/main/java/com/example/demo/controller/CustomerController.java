@@ -246,6 +246,7 @@ public class CustomerController {
 		request.setCharacterEncoding("utf-8");
 		String txtSearch = request.getParameter("txt");// váy
 		int total = productService.getTotalProductByDescription(txtSearch);
+		System.out.println(total);
 		int numberPagePagging;
 		if (total % 10 != 0) {
 			numberPagePagging = total / 10 + 1;
@@ -255,6 +256,7 @@ public class CustomerController {
 		PrintWriter out = response.getWriter();
 		if(total == 0) {
 			out.println("");
+			System.out.println("go");
 		} else {
 			out.println("<li class=\"pagination-item invisible\"><a\r\n" + "								href=\"\r\n"
 					+ "								\" class=\"pagination-item__link\"> <i\r\n"
