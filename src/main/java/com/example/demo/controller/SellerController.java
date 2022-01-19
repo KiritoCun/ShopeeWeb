@@ -118,59 +118,6 @@ public class SellerController {
         response.sendRedirect("manageProduct");
 	}
 	
-	@RequestMapping(value = "searchAjax")
-	public void searchByAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("utf-8");
-		String txtSearch = request.getParameter("txt");// váy
-		List<Product> list = productService.searchByNameFirstPage(txtSearch);
-		PrintWriter out = response.getWriter();
-		for (Product o : list) {
-			out.println("<div class=\"product col p-2-4 t-4 m-6\">\n"
-					+ "                                    <a class=\"home-product-item\" href=\"detail?pid="
-					+ o.getProductId() + "\">\n" + "                                        \n"
-					+ "                                        <div class=\"home-product-item__img\" style=\"background-image: url("
-					+ o.getUrl() + ");\"></div>\n" + "                                        \n"
-					+ "                                        <h4 class=\"home-product-item__name\">\n"
-					+ "                                            " + o.getDescription() + "\n"
-					+ "                                        </h4>\n" + "                                        \n"
-					+ "                                        <div class=\"home-product-item__price\">\n"
-					+ "                                            <span class=\"home-product-item__price-old\">"
-					+ o.getPriceOld() / 1000 + "00đ</span>\n"
-					+ "                                            <span class=\"home-product-item__price-current\">"
-					+ o.getPriceCurrent() / 1000 + "00đ</span>\n" + "                                        </div>\n"
-					+ "\n" + "                                        <div class=\"home-product-item__action\">\n"
-					+ "                                            <!-- Liked: home-product-item__like--liked -->\n"
-					+ "                                            <span class=\"home-product-item__like home-product-item__like--liked\">\n"
-					+ "                                                <i class=\"home-product-item__like-icon-empty far fa-heart\"></i>\n"
-					+ "                                                <i class=\"home-product-item__like-icon-fill fas fa-heart\"></i>\n"
-					+ "                                            </span>\n" + "\n"
-					+ "                                            <div class=\"home-product-item__rating\">\n"
-					+ "                                                <i class=\"home-product-item__star--gold fas fa-star\"></i>\n"
-					+ "                                                <i class=\"home-product-item__star--gold fas fa-star\"></i>\n"
-					+ "                                                <i class=\"home-product-item__star--gold fas fa-star\"></i>\n"
-					+ "                                                <i class=\"home-product-item__star--gold fas fa-star\"></i>\n"
-					+ "                                                <i class=\"fas fa-star\"></i>\n"
-					+ "                                            </div>\n"
-					+ "                                            <span class=\"home-product-item__sold\">"
-					+ o.getSold() + " đã bán</span>\n" + "                                        </div>\n" + "\n"
-					+ "                                        <div class=\"home-product-item__origin\">\n"
-					+ "                                            <span class=\"home-product-item__brand\">Whoo</span>\n"
-					+ "                                            <span class=\"home-product-item__origin-name\">"
-					+ o.getProvince() + "</span>\n" + "                                        </div>\n" + "\n"
-					+ "                                        <div class=\"home-product-item__favorite\">\n"
-					+ "                                            <i class=\"fas fa-check\"></i>\n"
-					+ "                                            <span>Yêu thích</span>\n"
-					+ "                                        </div>\n" + "\n"
-					+ "                                        <div class=\"home-product-item__sale-off\">\n"
-					+ "                                            <span class=\"home-product-item__sale-off-percent\">"
-					+ o.getSaleOff() + "%</span>\n"
-					+ "                                            <span class=\"home-product-item__sale-off-label\">GIẢM</span>\n"
-					+ "                                        </div>\n" + "                                    </a>\n"
-					+ "                                </div> ");
-		}
-	}
-	
 	@RequestMapping(value = "changeUrlDeleteProduct")
 	public void changeUrlDeleteProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html;charset=UTF-8");

@@ -291,7 +291,7 @@
                                     </svg>
                                     Chat ngay
                                 </button>                                
-                                <button onclick="addToCart(${detail.productId});changeCookieCart(${detail.productId});changeNumberCart();checkNoCart();checkHtmlCart();" class="content-cart-text">                                   
+                                <button onclick="addToCart(${detail.productId});changeCookieCart(${detail.productId});changeNumberCart(${detail.productId});checkNoCart();checkHtmlCart();" class="content-cart-text">                                   
                                         <i class="content-cart-icon fas fa-cart-plus"></i>
                                         Thêm vào giỏ hàng                                                                    
                                 </button>                             

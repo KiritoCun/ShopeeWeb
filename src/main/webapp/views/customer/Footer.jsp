@@ -253,7 +253,7 @@
                                         
                                     </ul>
                                     <div class="header__cart-view-cart">
-                                        <a href="cartControl${detail!=null?"?pid=":""}${detail!=null?detail.productId:""}" class="header__cart-btn btn btn--primary">Xem giỏ hàng</a>
+                                        <a href="cartControl${detail!=null?'?pid=':''}${detail!=null?detail.productId:''}" class="header__cart-btn btn btn--primary">Xem giỏ hàng</a>
                                     </div>
 `; 
                 }
@@ -318,12 +318,17 @@
                             quanlity:quanlity
                         },
                         success: function(data){
-                            var row = document.getElementById("productsIntoCart");
+                        	var row = document.getElementById("productsIntoCart");
                             if(html!==undefined){
                                 row.innerHTML = html;
                             }
+                        	 if(isNaN (data)){             
+                                row.innerHTML += data;
+                        	 }else{    
+                        		 var x = document.getElementById("quanlity"+productId);
+                        		 x.innerHTML = data;
+                        	} 
                             
-                            row.innerHTML += data;
                         },
                         error: function (xhr){
                             // Do something to handle error
@@ -351,11 +356,13 @@
                     });
                 }
                 function changeCookieCart(productId){
+                	 var quanlity = document.getElementById("quanlity").value;
                     $.ajax({
                         url: "/changeCookieCart",
                         type:"get",
                         data: {
-                            productId : productId
+                            productId : productId,
+                            quanlity:quanlity
                         },
                         success: function(id){
                             document.cookie = "id" + "=" + id + ";" + 24*60*60 + ";path=/";
@@ -380,11 +387,12 @@
                         }
                     });
                 }
-                function changeNumberCart(){
+                function changeNumberCart(productId){
                     $.ajax({
                         url: "/changeNumberCart",
                         type:"get",
                         data: {
+                        	productId : productId
                         },
                         success: function(number){
                             var row = document.getElementById("numberCart");
@@ -440,7 +448,7 @@
                 }
                 function checkNoCartDelete(){
                     $.ajax({
-                        url: "/checkNoCart",
+                        url: "/checkNoCartDelete",
                         type:"get",
                         data: {
                         },
@@ -484,8 +492,19 @@
                             txt : txtSearch
                         },
                         success: function(data){
-                            var row = document.getElementById("pagging-direction");
-                            row.innerHTML = data;
+                        	if(data.length == 0){
+                        		var emptyResultSearch = document.getElementById("emptyResultSearch");
+                        		emptyResultSearch.style.display = 'flex';
+                        		var haveResultSearch = document.getElementById("haveResultSearch");
+                        		haveResultSearch.style.display = 'none';
+                        	} else{
+                        		var emptyResultSearch = document.getElementById("emptyResultSearch");
+                        		emptyResultSearch.style.display = 'none';
+                        		var haveResultSearch = document.getElementById("haveResultSearch");
+                        		haveResultSearch.style.display = 'block';
+                        		var row = document.getElementById("pagging-direction");
+                                row.innerHTML = data;
+                        	}                     
                         },
                         error: function (xhr){
                             // Do something to handle error
@@ -501,22 +520,10 @@
                             txt : txtSearch
                         },
                         success: function(data){
-                        	console.log("data: "+data);
-                        	console.log("zo");
-                        	console.log(data.length)
-                        	if(data.length == 0){
-                        		console.log("zo1");
-                        		var showEmptyResultSearchByAjax = document.getElementById("resultSearch");
-                        		showEmptyResultSearchByAjax.innerHTML = "";
-                        		showEmptyResultSearchByAjax.innerHTML = `<div><img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/a60759ad1dabe909c46a817ecbf71878.png"><div>Không tìm thấy kết quả nào</div><div>Hãy thử sử dụng các từ khóa chung chung hơn</div></div>`;
-                        	} else{
-                        		console.log("zo2");
                         		var row = document.getElementById("pagging-direction-top");
-                                row.innerHTML = data;
-                        	}                    
+                                row.innerHTML = data;              
                         },
                         error: function (xhr){
-                        	console.log("error")
                         }
                     });
                 }
@@ -529,9 +536,8 @@
                             txt : txtSearch
                         },
                         success: function(data){
-                            var row = document.getElementById("linkPaging");
+                            var row = document.getElementById("LinkPaging");
                             row.innerHTML = data;
-                            console.log("okee");
                         },
                         error: function (xhr){
                             // Do something to handle error
